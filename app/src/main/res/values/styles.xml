@@ -1,0 +1,41 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Stylelogo">
+        <item name="android:src">@drawable/mlogo</item>
+        <item name="android:layout_width">180dp</item>
+        <item name="android:layout_height">180dp</item>
+    </style>
+
+    <style name="textstyle">
+        <item name="android:textSize">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="buttonAnswer" parent="textstyle">
+        <item name="android:paddingLeft">25dp</item>
+        <item name="android:paddingRight">25dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:lines">2</item>
+        <item name="android:background">@drawable/answer</item>
+        <item name="android:layout_width">280dp</item>
+        <item name="android:layout_height">50dp</item>
+    </style>
+    <style name="buttonChooser" parent="buttonAnswer">
+        <item name="android:background">@drawable/chooser</item>
+    </style>
+    <style name="StypeDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+    </style>
+</resources>

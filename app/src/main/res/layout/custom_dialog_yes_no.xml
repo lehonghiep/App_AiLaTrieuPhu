@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#BDBDBD"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<TextView
+    android:id="@+id/tv_notify"
+    android:gravity="center"
+    android:textSize="20dp"
+    android:textColor="#FAFAFA"
+    android:text="Đáp án cuối cùng của bạn là "
+    android:background="#212121"
+    android:layout_width="match_parent"
+    android:layout_height="50dp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <Button
+            android:text="Đồng ý"
+            android:background="#FFFFFF"
+            android:id="@+id/btn_agree"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:text="Không"
+            android:background="#FFFFFF"
+            android:id="@+id/btn_disagree"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>

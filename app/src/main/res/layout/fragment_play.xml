@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/bg_altp"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$0"
+        android:textColor="#CDDC39"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="0:59"
+        android:textColor="#CDDC39"
+        android:textSize="30dp" />
+
+    <ImageView
+        style="@style/Stylelogo"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/mlogo" />
+
+    <TextView
+        android:id="@+id/tv_question"
+        style="@style/textstyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="16dp"
+        android:text="Câu hỏi số 1:Từ Hello trong tiếng anh co nghĩa là gì" />
+
+    <Button
+        android:id="@+id/btn_a"
+        style="@style/buttonAnswer"
+        android:layout_below="@+id/tv_question" />
+    <Button
+        android:id="@+id/btn_b"
+        style="@style/buttonAnswer"
+        android:layout_below="@+id/btn_a" />
+    <Button
+        android:id="@+id/btn_c"
+        style="@style/buttonAnswer"
+        android:layout_below="@+id/btn_b" />
+    <Button
+        android:id="@+id/btn_d"
+        style="@style/buttonAnswer"
+        android:layout_below="@+id/btn_c" />
+</RelativeLayout>

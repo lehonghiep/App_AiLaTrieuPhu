@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/bg_altp"
+    android:layout_height="match_parent">
+    <ImageView
+        style="@style/Stylelogo"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/mlogo" />
+
+    <Button
+        android:layout_centerInParent="true"
+        android:text="Chơi game"
+        android:id="@+id/btn_choigame"
+        style="@style/buttonChooser" />
+
+    <Button
+        android:id="@+id/btn_diemcao"
+        android:text="Điểm cao"
+        style="@style/buttonChooser"
+        android:layout_below="@+id/btn_choigame" />
+
+    <Button
+        android:id="@+id/btn_huongdan"
+        style="@style/buttonChooser"
+        android:text="Hướng dẫn"
+        android:layout_below="@+id/btn_diemcao" />
+
+</RelativeLayout>
