@@ -12,8 +12,9 @@ public class Question {
     private String rc;
     private String rd;
     private int trueCase;
+    private int questionID;
 
-    public Question(int level, String ask, String ra, String rb, String rc, String rd, int trueCase) {
+    public Question(int level, String ask, String ra, String rb, String rc, String rd, int trueCase,int questionID) {
         this.level = level;
         this.ask = ask;
         this.ra = ra;
@@ -21,6 +22,7 @@ public class Question {
         this.rc = rc;
         this.rd = rd;
         this.trueCase = trueCase;
+        this.questionID=questionID;
     }
 
     public int getLevel() {
@@ -49,5 +51,13 @@ public class Question {
 
     public int getTrueCase() {
         return trueCase;
+    }
+
+    public int getQuestionID() {
+        return questionID;
+    }
+
+    public void setQuestionID(int questionID) {
+        this.questionID = questionID;
     }
 }

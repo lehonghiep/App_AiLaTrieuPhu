@@ -20,5 +20,6 @@ public interface IQuestions {
     void setClickButtonKhanGia(boolean clickButtonKhanGia);
     void setClickButtonSwith(boolean isClickButtonSwith);
     void setClickButtonCall(boolean isClickButtonCall);
+    void changeQuestionByIdAndLevel(int level, int id);
 }
 

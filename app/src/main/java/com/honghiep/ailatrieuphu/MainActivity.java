@@ -18,6 +18,7 @@ public class MainActivity extends FragmentActivity implements IQuestions, Custom
     private Fragment fragment;
     private FragmentManager manager;
     private boolean isClickFifty, isClickKhanGia, isClickCall, isClickSwith;
+    private ManagerAiLaTrieuPhu managerAiLaTrieuPhu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class MainActivity extends FragmentActivity implements IQuestions, Custom
         isClickCall = true;
         isClickSwith = true;
 
-        ManagerAiLaTrieuPhu managerAiLaTrieuPhu = new ManagerAiLaTrieuPhu(this);
+        managerAiLaTrieuPhu = new ManagerAiLaTrieuPhu(this);
         questions = managerAiLaTrieuPhu.get15Question();
     }
 
@@ -57,19 +58,23 @@ public class MainActivity extends FragmentActivity implements IQuestions, Custom
             CustomDialogYesNo dialogYesNo = new CustomDialogYesNo(this, R.style.StypeDialog, new CustomDialogYesNo.ICustomDialogYesNo() {
                 @Override
                 public void onClickAgree() {
-                    manager = getSupportFragmentManager();
-                    fragment = manager.findFragmentByTag(FragmentPlay.class.getName());
-                    if (fragment != null && fragment.isVisible()) {
-                        FragmentPlay play = ((FragmentPlay) fragment);
-                        play.destroyTime();
-                        play.destroyAnimAnswer();
-                        play.notifyGameOver();
-                    }
+                    destroyAsycnTastInFragmentPlay();
                 }
             });
             dialogYesNo.setTextNotify("Bạn muốn dừng cuộc chơi");
             dialogYesNo.show();
 
+        }
+    }
+
+    private void destroyAsycnTastInFragmentPlay() {
+        manager = getSupportFragmentManager();
+        fragment = manager.findFragmentByTag(FragmentPlay.class.getName());
+        if (fragment != null && fragment.isVisible()) {
+            FragmentPlay play = ((FragmentPlay) fragment);
+            play.destroyTime();
+            play.destroyAnimAnswer();
+            play.notifyGameOver();
         }
     }
 
@@ -147,6 +152,19 @@ public class MainActivity extends FragmentActivity implements IQuestions, Custom
     @Override
     public void setClickButtonCall(boolean isClickButtonCall) {
         this.isClickCall = isClickButtonCall;
+    }
+
+    @Override
+    public void changeQuestionByIdAndLevel(int level, int id) {
+        questions.add(0,managerAiLaTrieuPhu.getRePlaceQuestion(level,id));
+        manager = getSupportFragmentManager();
+        fragment = manager.findFragmentByTag(FragmentPlay.class.getName());
+        if (fragment != null && fragment.isVisible()) {
+            FragmentPlay play = ((FragmentPlay) fragment);
+            play.destroyTime();
+            play.destroyAnimAnswer();
+        }
+        openPlay();
     }
 
     @Override

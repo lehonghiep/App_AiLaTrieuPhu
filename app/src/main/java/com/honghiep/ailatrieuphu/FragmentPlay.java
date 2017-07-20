@@ -473,12 +473,12 @@ public class FragmentPlay extends Fragment implements View.OnClickListener, Cust
                                         break;
                                 }
                             }
-
                         }).show();
                         break;
                     case R.id.btn_switch:
                         view.setBackgroundResource(R.drawable.switch3);
                         mInterf.setClickButtonSwith(false);
+                        mInterf.changeQuestionByIdAndLevel(question.getLevel(),question.getQuestionID());
                         break;
                 }
             }

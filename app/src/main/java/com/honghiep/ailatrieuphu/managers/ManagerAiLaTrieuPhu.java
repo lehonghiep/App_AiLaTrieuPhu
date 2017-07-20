@@ -113,6 +113,7 @@ public class ManagerAiLaTrieuPhu {
         int indexRd = cursor.getColumnIndex("cased");
         int indexlevel = cursor.getColumnIndex("level");
         int indexTruecase = cursor.getColumnIndex("truecase");
+        int index_id = cursor.getColumnIndex("_id");
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
@@ -123,6 +124,7 @@ public class ManagerAiLaTrieuPhu {
             String rd = cursor.getString(indexRd);
             int level = cursor.getInt(indexlevel);
             int truecase = cursor.getInt(indexTruecase);
+            int _id = cursor.getInt(index_id);
             Log.d(TAG, "ask: " + ask);
             Log.d(TAG, "ra: " + ra);
             Log.d(TAG, "rb: " + rb);
@@ -130,8 +132,9 @@ public class ManagerAiLaTrieuPhu {
             Log.d(TAG, "rd: " + rd);
             Log.d(TAG, "level: " + level);
             Log.d(TAG, "truecase: " + truecase);
+            Log.d(TAG, "_id: " + _id);
             Log.d(TAG, "=================");
-            questions.add(new Question(level, ask, ra, rb, rc, rd, truecase));
+            questions.add(new Question(level, ask, ra, rb, rc, rd, truecase, _id));
             cursor.move(1);
         }
 
@@ -158,6 +161,44 @@ public class ManagerAiLaTrieuPhu {
 
 
         closeDatabse();
+    }
+
+    public Question getRePlaceQuestion(int levelChange, int _idChange){
+        openDatabase();
+        String sql="SELECT * FROM question where _id != "+_idChange +" and level ="+levelChange +" order by random() limit 1";
+        Cursor cursor =
+                managerSql.rawQuery(sql, null);
+        if (cursor == null) {
+            return null;
+        }
+        int indexAsk = cursor.getColumnIndex("question");
+        int indexRa = cursor.getColumnIndex("casea");
+        int indexRb = cursor.getColumnIndex("caseb");
+        int indexRc = cursor.getColumnIndex("casec");
+        int indexRd = cursor.getColumnIndex("cased");
+        int indexlevel = cursor.getColumnIndex("level");
+        int indexTruecase = cursor.getColumnIndex("truecase");
+        int index_id = cursor.getColumnIndex("_id");
+        cursor.moveToFirst();
+            String ask = cursor.getString(indexAsk);
+            String ra = cursor.getString(indexRa);
+            String rb = cursor.getString(indexRb);
+            String rc = cursor.getString(indexRc);
+            String rd = cursor.getString(indexRd);
+            int level = cursor.getInt(indexlevel);
+            int truecase = cursor.getInt(indexTruecase);
+            int _id = cursor.getInt(index_id);
+            Log.d(TAG, "ask: " + ask);
+            Log.d(TAG, "ra: " + ra);
+            Log.d(TAG, "rb: " + rb);
+            Log.d(TAG, "rc: " + rc);
+            Log.d(TAG, "rd: " + rd);
+            Log.d(TAG, "level: " + level);
+            Log.d(TAG, "truecase: " + truecase);
+            Log.d(TAG, "_id: " + _id);
+            Log.d(TAG, "=================");
+        closeDatabse();
+        return new Question(level,ask,ra,rb,rc,rd,truecase,_id);
     }
 
 }
