@@ -36,6 +36,7 @@ public class CustomDiglogOk extends Dialog implements View.OnClickListener {
         tv_notify.setText(notify);
     }
 
+
     public interface ICustomDiglogOk {
         void onClickOk();
     }

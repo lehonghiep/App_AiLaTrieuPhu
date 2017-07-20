@@ -17,6 +17,7 @@ public class MainActivity extends FragmentActivity implements IQuestions, Custom
     private List<Question> questions;
     private Fragment fragment;
     private FragmentManager manager;
+    private boolean isClickFifty, isClickKhanGia, isClickCall, isClickSwith;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,11 @@ public class MainActivity extends FragmentActivity implements IQuestions, Custom
     }
 
     public void inits() {
+        isClickFifty = true;
+        isClickKhanGia = true;
+        isClickCall = true;
+        isClickSwith = true;
+
         ManagerAiLaTrieuPhu managerAiLaTrieuPhu = new ManagerAiLaTrieuPhu(this);
         questions = managerAiLaTrieuPhu.get15Question();
     }
@@ -36,7 +42,7 @@ public class MainActivity extends FragmentActivity implements IQuestions, Custom
         fragment =
                 manager.findFragmentByTag(FragmentChooser.class.getName());
         if (fragment != null && fragment.isVisible()) {
-            CustomDialogYesNo dialogYesNo=new CustomDialogYesNo(this, R.style.StypeDialog, new CustomDialogYesNo.ICustomDialogYesNo() {
+            CustomDialogYesNo dialogYesNo = new CustomDialogYesNo(this, R.style.StypeDialog, new CustomDialogYesNo.ICustomDialogYesNo() {
                 @Override
                 public void onClickAgree() {
                     MainActivity.super.onBackPressed();
@@ -51,10 +57,10 @@ public class MainActivity extends FragmentActivity implements IQuestions, Custom
             CustomDialogYesNo dialogYesNo = new CustomDialogYesNo(this, R.style.StypeDialog, new CustomDialogYesNo.ICustomDialogYesNo() {
                 @Override
                 public void onClickAgree() {
-                    manager=getSupportFragmentManager();
-                    fragment=manager.findFragmentByTag(FragmentPlay.class.getName());
-                    if(fragment!=null && fragment.isVisible()){
-                        FragmentPlay play=((FragmentPlay) fragment);
+                    manager = getSupportFragmentManager();
+                    fragment = manager.findFragmentByTag(FragmentPlay.class.getName());
+                    if (fragment != null && fragment.isVisible()) {
+                        FragmentPlay play = ((FragmentPlay) fragment);
                         play.destroyTime();
                         play.destroyAnimAnswer();
                         play.notifyGameOver();
@@ -101,6 +107,46 @@ public class MainActivity extends FragmentActivity implements IQuestions, Custom
         transaction.replace(R.id.content, fragment, FragmentPlay.class.getName());
 //        transaction.addToBackStack(FragmentPlay.class.getName());
         transaction.commit();
+    }
+
+    @Override
+    public boolean getClickButtonFifty() {
+        return isClickFifty;
+    }
+
+    @Override
+    public boolean getClickButtonKhanGia() {
+        return isClickKhanGia;
+    }
+
+    @Override
+    public boolean getClickButtonSwith() {
+        return isClickSwith;
+    }
+
+    @Override
+    public boolean getClickButtonCall() {
+        return isClickCall;
+    }
+
+    @Override
+    public void setClickButtonFifty(boolean isClickButtonFifty) {
+        this.isClickFifty = isClickButtonFifty;
+    }
+
+    @Override
+    public void setClickButtonKhanGia(boolean clickButtonKhanGia) {
+        this.isClickKhanGia = clickButtonKhanGia;
+    }
+
+    @Override
+    public void setClickButtonSwith(boolean isClickButtonSwith) {
+        this.isClickSwith = isClickButtonSwith;
+    }
+
+    @Override
+    public void setClickButtonCall(boolean isClickButtonCall) {
+        this.isClickCall = isClickButtonCall;
     }
 
     @Override

@@ -11,7 +11,8 @@
     android:text="Đáp án cuối cùng của bạn là "
     android:background="#212121"
     android:layout_width="match_parent"
-    android:layout_height="50dp" />
+    android:padding="10dp"
+    android:layout_height="wrap_content" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

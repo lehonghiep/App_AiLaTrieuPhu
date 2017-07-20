@@ -18,7 +18,7 @@ public class CustomDialogIsReady extends Dialog implements View.OnClickListener{
         this.mInterf= (ICustomDialogIsReady) context;
     }
     public CustomDialogIsReady(@NonNull Context context, int themResId, ICustomDialogIsReady mInterf) {
-        super(context);
+        super(context, themResId);
         inits();
         this.mInterf=mInterf;
     }

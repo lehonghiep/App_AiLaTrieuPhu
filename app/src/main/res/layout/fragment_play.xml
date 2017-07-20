@@ -21,9 +21,40 @@
         android:textSize="30dp" />
 
     <ImageView
+        android:id="@+id/iv_logo"
         style="@style/Stylelogo"
         android:layout_centerHorizontal="true"
         android:src="@drawable/mlogo" />
+    <Button
+        android:id="@+id/btn_khangia"
+        android:background="@drawable/khangia2"
+        android:layout_centerHorizontal="true"
+        style="@style/StyleButtonHelp"
+        />
+    <Button
+        android:id="@+id/btn_fifty"
+        android:layout_toLeftOf="@+id/btn_khangia"
+        android:background="@drawable/fifty2"
+        style="@style/StyleButtonHelp"
+        />
+    <Button
+        android:id="@+id/btn_call"
+        android:background="@drawable/call2"
+        android:layout_toRightOf="@+id/btn_khangia"
+        style="@style/StyleButtonHelp"
+        />
+    <Button
+        android:id="@+id/btn_pause"
+        android:layout_toLeftOf="@+id/btn_fifty"
+        android:background="@drawable/pause"
+        style="@style/StyleButtonHelp"
+        />
+    <Button
+        android:id="@+id/btn_switch"
+        android:layout_toRightOf="@+id/btn_call"
+        android:background="@drawable/switch3"
+        style="@style/StyleButtonHelp"
+        />
 
     <TextView
         android:id="@+id/tv_question"
