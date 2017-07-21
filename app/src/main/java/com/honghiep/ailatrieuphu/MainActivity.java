@@ -1,6 +1,7 @@
 package com.honghiep.ailatrieuphu;
 
 import android.app.Dialog;
+import android.media.MediaPlayer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,7 @@ public class MainActivity extends FragmentActivity implements IQuestions, Custom
     private FragmentManager manager;
     private boolean isClickFifty, isClickKhanGia, isClickCall, isClickSwith;
     private ManagerAiLaTrieuPhu managerAiLaTrieuPhu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class MainActivity extends FragmentActivity implements IQuestions, Custom
             CustomDialogYesNo dialogYesNo = new CustomDialogYesNo(this, R.style.StypeDialog, new CustomDialogYesNo.ICustomDialogYesNo() {
                 @Override
                 public void onClickAgree() {
+                    SounManager.destroySound();
                     MainActivity.super.onBackPressed();
                 }
             });
@@ -58,6 +61,7 @@ public class MainActivity extends FragmentActivity implements IQuestions, Custom
             CustomDialogYesNo dialogYesNo = new CustomDialogYesNo(this, R.style.StypeDialog, new CustomDialogYesNo.ICustomDialogYesNo() {
                 @Override
                 public void onClickAgree() {
+                    SounManager.playSoundLose(MainActivity.this);
                     destroyAsycnTastInFragmentPlay();
                 }
             });
@@ -188,6 +192,9 @@ public class MainActivity extends FragmentActivity implements IQuestions, Custom
 
     @Override
     public void onClickPlayGame() {
-        new CustomDialogIsReady(this, R.style.StypeDialog, this).show();
+        CustomDialogIsReady dialogIsReady=
+        new CustomDialogIsReady(this, R.style.StypeDialog, this);
+        dialogIsReady.setCancelable(false);
+        dialogIsReady.show();
     }
 }

@@ -12,15 +12,18 @@ import android.view.Window;
 
 public class CustomDialogIsReady extends Dialog implements View.OnClickListener{
     private ICustomDialogIsReady mInterf;
+    private Context context;
     public CustomDialogIsReady(@NonNull Context context){
         super(context);
         inits();
         this.mInterf= (ICustomDialogIsReady) context;
+        this.context=context;
     }
     public CustomDialogIsReady(@NonNull Context context, int themResId, ICustomDialogIsReady mInterf) {
         super(context, themResId);
         inits();
         this.mInterf=mInterf;
+        this.context=context;
     }
     private void inits(){
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -32,12 +35,21 @@ public class CustomDialogIsReady extends Dialog implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        SounManager.destroySound();
         dismiss();
         if(v.getId()==R.id.btn_ready){
             mInterf.onClickOkReady();
+        }else {
+            SounManager.playSoundBackGroud(context);
         }
     }
     public interface ICustomDialogIsReady {
         void onClickOkReady();
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        SounManager.playSoundIsReady(context);
     }
 }

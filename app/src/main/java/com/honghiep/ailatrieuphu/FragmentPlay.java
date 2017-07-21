@@ -1,8 +1,11 @@
 package com.honghiep.ailatrieuphu;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -38,7 +41,6 @@ public class FragmentPlay extends Fragment implements View.OnClickListener, Cust
     private int chooserCase;
     private AsytastEventButtonAnswer asytastEventButtonAnswer;
     private Random random = new Random();
-
 
     @Override
     public void onAttach(Context context) {
@@ -99,6 +101,8 @@ public class FragmentPlay extends Fragment implements View.OnClickListener, Cust
             btn_switch.setBackgroundResource(R.drawable.switch2);
             btn_switch.setOnClickListener(this);
         }
+
+        SounManager.startSoundQuestion(context, question.getLevel());
 
         tv_money = view.findViewById(R.id.tv_money);
         tv_money.setText("$" + getMoney(question));
@@ -232,6 +236,7 @@ public class FragmentPlay extends Fragment implements View.OnClickListener, Cust
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            SounManager.playSounOutTime(context);
             notifyGameOver();
         }
     }
@@ -239,120 +244,82 @@ public class FragmentPlay extends Fragment implements View.OnClickListener, Cust
     public class AsytastEventButtonAnswer extends AsyncTask<Integer, Integer, Boolean> {
         private int trueCaseInSy;
         private int chooserCaseInSy;
+        private AnimationDrawable drawableWrong, drawableCorrect;
 
         @Override
         protected void onPreExecute() {
             trueCaseInSy = trueCase;
             chooserCaseInSy = chooserCase;
-            btn_a.setEnabled(false);
-            btn_b.setEnabled(false);
-            btn_c.setEnabled(false);
-            btn_d.setEnabled(false);
-
-            btn_pause.setEnabled(false);
-            if (btn_fifty != null) {
-                btn_fifty.setEnabled(false);
-            }
-            if (btn_khangia != null) {
-                btn_khangia.setEnabled(false);
-            }
-            if (btn_call != null) {
-                btn_call.setEnabled(false);
-            }
-            if (btn_switch != null) {
-                btn_switch.setEnabled(false);
-            }
+            setEnableFalseAllButton();
             super.onPreExecute();
         }
 
         @Override
         protected Boolean doInBackground(Integer... integers) {
-            int i = 10;
             try {
-                Thread.sleep(500);
+                Thread.sleep(SounManager.playSoundChooser(context, chooserCaseInSy, question.getLevel()));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            while (i > 0) {
-                publishProgress(i);
-                i--;
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            publishProgress();
+            try {
+                Thread.sleep(SounManager.startSoundResult(context,trueCase,trueCaseInSy == chooserCaseInSy));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+
             return trueCaseInSy == chooserCaseInSy;
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            int i = values[0];
             if (trueCaseInSy != chooserCaseInSy) {
                 switch (chooserCase) {
                     case 1:
-                        if (i % 2 == 0) {
-                            btn_a.setBackgroundResource(R.drawable.case_wrong);
-                        } else {
-                            btn_a.setBackgroundResource(R.drawable.case2);
-                        }
+                        btn_a.setBackgroundResource(R.drawable.animation_wrong);
+                        drawableWrong = (AnimationDrawable) btn_a.getBackground();
                         break;
                     case 2:
-                        if (i % 2 == 0) {
-                            btn_b.setBackgroundResource(R.drawable.case_wrong);
-                        } else {
-                            btn_b.setBackgroundResource(R.drawable.case2);
-                        }
+                        btn_b.setBackgroundResource(R.drawable.animation_wrong);
+                        drawableWrong = (AnimationDrawable) btn_b.getBackground();
                         break;
                     case 3:
-                        if (i % 2 == 0) {
-                            btn_c.setBackgroundResource(R.drawable.case_wrong);
-                        } else {
-                            btn_c.setBackgroundResource(R.drawable.case2);
-                        }
+                        btn_c.setBackgroundResource(R.drawable.animation_wrong);
+                        drawableWrong = (AnimationDrawable) btn_c.getBackground();
                         break;
                     case 4:
-                        if (i % 2 == 0) {
-                            btn_d.setBackgroundResource(R.drawable.case_wrong);
-                        } else {
-                            btn_d.setBackgroundResource(R.drawable.case2);
-                        }
+                        btn_d.setBackgroundResource(R.drawable.animation_wrong);
+                        drawableWrong = (AnimationDrawable) btn_d.getBackground();
                         break;
                     default:
                         break;
                 }
+                if (drawableWrong != null) {
+                    drawableWrong.start();
+                }
             }
             switch (trueCase) {
                 case 1:
-                    if (i % 2 == 0) {
-                        btn_a.setBackgroundResource(R.drawable.case_correct);
-                    } else {
-                        btn_a.setBackgroundResource(R.drawable.case2);
-                    }
+                    btn_a.setBackgroundResource(R.drawable.animation_true);
+                    drawableCorrect = (AnimationDrawable) btn_a.getBackground();
                     break;
                 case 2:
-                    if (i % 2 == 0) {
-                        btn_b.setBackgroundResource(R.drawable.case_correct);
-                    } else {
-                        btn_b.setBackgroundResource(R.drawable.case2);
-                    }
+                    btn_b.setBackgroundResource(R.drawable.animation_true);
+                    drawableCorrect = (AnimationDrawable) btn_b.getBackground();
                     break;
                 case 3:
-                    if (i % 2 == 0) {
-                        btn_c.setBackgroundResource(R.drawable.case_correct);
-                    } else {
-                        btn_c.setBackgroundResource(R.drawable.case2);
-                    }
+                    btn_c.setBackgroundResource(R.drawable.animation_true);
+                    drawableCorrect = (AnimationDrawable) btn_c.getBackground();
                     break;
                 case 4:
-                    if (i % 2 == 0) {
-                        btn_d.setBackgroundResource(R.drawable.case_correct);
-                    } else {
-                        btn_d.setBackgroundResource(R.drawable.case2);
-                    }
+                    btn_d.setBackgroundResource(R.drawable.animation_true);
+                    drawableCorrect = (AnimationDrawable) btn_d.getBackground();
                     break;
                 default:
                     break;
+            }
+            if (drawableCorrect != null) {
+                drawableCorrect.start();
             }
 
             super.onProgressUpdate(values);
@@ -371,6 +338,12 @@ public class FragmentPlay extends Fragment implements View.OnClickListener, Cust
                     diglogOk.show();
                 }
             } else {
+                if (drawableWrong != null) {
+                    drawableWrong.stop();
+                }
+                if (drawableCorrect != null) {
+                    drawableCorrect.stop();
+                }
                 notifyGameOver();
             }
         }
@@ -448,8 +421,39 @@ public class FragmentPlay extends Fragment implements View.OnClickListener, Cust
                     case R.id.btn_call:
                         view.setBackgroundResource(R.drawable.call2);
                         mInterf.setClickButtonCall(false);
-                        new CustomDialogGoiNguoiThan(context, R.style.StypeDialog,
-                                new CustomDialogGoiNguoiThan.ICustomDialogGoiNguoiThan() {
+                        eventCallFriends();
+                        break;
+                    case R.id.btn_switch:
+                        view.setBackgroundResource(R.drawable.switch3);
+                        mInterf.setClickButtonSwith(false);
+                        mInterf.changeQuestionByIdAndLevel(question.getLevel(), question.getQuestionID());
+                        break;
+                }
+            }
+        });
+        dialogYesNo.setTextNotify("Bạn muốn sử dụng sự trợ giúp này");
+        dialogYesNo.show();
+    }
+
+    private void eventCallFriends() {
+        AsyncTask<Void, Void, Boolean>syHelp=new AsyncTask<Void, Void, Boolean>() {
+            @Override
+            protected void onPreExecute() {
+                setEnableFalseAllButton();
+                super.onPreExecute();
+            }
+
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                SystemClock.sleep(SounManager.playSoundCallFriends(context,question.getLevel()));
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                super.onPostExecute(aBoolean);
+                new CustomDialogGoiNguoiThan(context, R.style.StypeDialog,
+                        new CustomDialogGoiNguoiThan.ICustomDialogGoiNguoiThan() {
                             @Override
                             public void onClickFriends(View view) {
                                 switch (view.getId()) {
@@ -474,54 +478,113 @@ public class FragmentPlay extends Fragment implements View.OnClickListener, Cust
                                 }
                             }
                         }).show();
-                        break;
-                    case R.id.btn_switch:
-                        view.setBackgroundResource(R.drawable.switch3);
-                        mInterf.setClickButtonSwith(false);
-                        mInterf.changeQuestionByIdAndLevel(question.getLevel(),question.getQuestionID());
-                        break;
-                }
+                setEnableTrueAllButton();
             }
-        });
-        dialogYesNo.setTextNotify("Bạn muốn sử dụng sự trợ giúp này");
-        dialogYesNo.show();
+        };
+        syHelp.executeOnExecutor(Executors.newFixedThreadPool(1));
     }
 
     private void eventFifty() {
-        int falseCaseOne = random.nextInt(4) + 1;
-        while (trueCase == falseCaseOne) {
-            falseCaseOne = random.nextInt(4) + 1;
+        AsyncTask<Void, Void, Boolean>syHelp=new AsyncTask<Void, Void, Boolean>() {
+            @Override
+            protected void onPreExecute() {
+                setEnableFalseAllButton();
+                super.onPreExecute();
+            }
+
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                SystemClock.sleep(SounManager.playSound5050(context,question.getLevel()));
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                super.onPostExecute(aBoolean);
+                int falseCaseOne = random.nextInt(4) + 1;
+                while (trueCase == falseCaseOne) {
+                    falseCaseOne = random.nextInt(4) + 1;
+                }
+                int falseCaseTwo = random.nextInt(4) + 1;
+                while (trueCase == falseCaseTwo || falseCaseTwo == falseCaseOne) {
+                    falseCaseTwo = random.nextInt(4) + 1;
+                }
+                if (falseCaseOne == 1 || falseCaseTwo == 1) {
+                    btn_a.setText("");
+                }
+                if (falseCaseOne == 2 || falseCaseTwo == 2) {
+                    btn_b.setText("");
+                }
+                if (falseCaseOne == 3 || falseCaseTwo == 3) {
+                    btn_c.setText("");
+                }
+                if (falseCaseOne == 4 || falseCaseTwo == 4) {
+                    btn_d.setText("");
+                }
+
+                setEnableTrueAllButton();
+            }
+        };
+        syHelp.executeOnExecutor(Executors.newFixedThreadPool(1));
+
+    }
+
+    private void setEnableTrueAllButton() {
+        btn_a.setEnabled(true);
+        btn_b.setEnabled(true);
+        btn_c.setEnabled(true);
+        btn_d.setEnabled(true);
+
+        btn_pause.setEnabled(true);
+        if (btn_fifty != null) {
+            btn_fifty.setEnabled(true);
         }
-        int falseCaseTwo = random.nextInt(4) + 1;
-        while (trueCase == falseCaseTwo || falseCaseTwo == falseCaseOne) {
-            falseCaseTwo = random.nextInt(4) + 1;
+        if (btn_khangia != null) {
+            btn_khangia.setEnabled(true);
         }
-        if (falseCaseOne == 1 || falseCaseTwo == 1) {
-            btn_a.setText("");
+        if (btn_call != null) {
+            btn_call.setEnabled(true);
         }
-        if (falseCaseOne == 2 || falseCaseTwo == 2) {
-            btn_b.setText("");
-        }
-        if (falseCaseOne == 3 || falseCaseTwo == 3) {
-            btn_c.setText("");
-        }
-        if (falseCaseOne == 4 || falseCaseTwo == 4) {
-            btn_d.setText("");
+        if (btn_switch != null) {
+            btn_switch.setEnabled(true);
         }
     }
+
+    private void setEnableFalseAllButton() {
+        btn_a.setEnabled(false);
+        btn_b.setEnabled(false);
+        btn_c.setEnabled(false);
+        btn_d.setEnabled(false);
+
+        btn_pause.setEnabled(false);
+        if (btn_fifty != null) {
+            btn_fifty.setEnabled(false);
+        }
+        if (btn_khangia != null) {
+            btn_khangia.setEnabled(false);
+        }
+        if (btn_call != null) {
+            btn_call.setEnabled(false);
+        }
+        if (btn_switch != null) {
+            btn_switch.setEnabled(false);
+        }
+    }
+
     private void eventShowDapAn(int percentCorrect) {
         int dapan;
         if (random.nextInt(100) > percentCorrect) {
-            dapan=random.nextInt(4)+1;
-        }else{
-            dapan=trueCase;
+            dapan = random.nextInt(4) + 1;
+        } else {
+            dapan = trueCase;
         }
-        CustomDialogDapan dialogDapan=
+        CustomDialogDapan dialogDapan =
                 new CustomDialogDapan(context, R.style.StypeDialog);
         dialogDapan.setTextNotify(convertAnswertoString(dapan));
         dialogDapan.show();
     }
-    private String convertAnswertoString(int caseNumber){
-        return (char)(caseNumber+48+16)+"";
+
+    private String convertAnswertoString(int caseNumber) {
+        return (char) (caseNumber + 48 + 16) + "";
     }
 }

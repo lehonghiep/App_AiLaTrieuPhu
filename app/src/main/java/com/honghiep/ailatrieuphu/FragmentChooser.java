@@ -20,6 +20,7 @@ import com.honghiep.ailatrieuphu.models.Question;
 public class FragmentChooser extends Fragment implements View.OnClickListener {
     private IFragmentChooser mInterf;
     private Animation anim_btn_choigame, anim_btn_diem_cao, anim_btn_huong_dan;
+    private Context context;
 
     @Override
     public void onAttach(Context context) {
@@ -28,6 +29,7 @@ public class FragmentChooser extends Fragment implements View.OnClickListener {
         anim_btn_choigame = AnimationUtils.loadAnimation(context, R.anim.animation_btn_choigame);
         anim_btn_diem_cao = AnimationUtils.loadAnimation(context, R.anim.animation_btn_diemcao);
         anim_btn_huong_dan = AnimationUtils.loadAnimation(context, R.anim.animation_btn_huongdan);
+        this.context = context;
     }
 
     @Override
@@ -49,6 +51,7 @@ public class FragmentChooser extends Fragment implements View.OnClickListener {
         Button btn_huongdan = view.findViewById(R.id.btn_huongdan);
         btn_huongdan.startAnimation(anim_btn_huong_dan);
         btn_huongdan.setOnClickListener(this);
+        SounManager.playSoundBackGroud(context);
         return view;
     }
 
